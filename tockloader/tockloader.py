@@ -30,6 +30,7 @@ from .tbfh import TBFHeader
 from .tbfh import TBFFooter
 from .jlinkexe import JLinkExe
 from .openocd import OpenOCD, collect_temp_files
+from .esptool import EspTool
 from .flash_file import FlashFile
 from .tickv import TockTicKV
 
@@ -185,6 +186,8 @@ class TockLoader:
         elif hasattr(self.args, "serial") and self.args.serial:
             # User passed `--serial`. Force the serial bootloader channel.
             self.channel = BootloaderSerial(self.args)
+        elif hasattr(self.args, "esptool") and self.args.esptool:
+            self.channel = EspTool(self.args)
         elif hasattr(self.args, "flash_file") and self.args.flash_file is not None:
             # User passed `--flash-file` option with an associated file. Force
             # operation on the specified file.
